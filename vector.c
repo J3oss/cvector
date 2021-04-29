@@ -79,3 +79,15 @@ void resize_vec(void** v, unsigned int size)
 
   VSTART(*v)->size = size;
 }
+
+void shrink_fit_vec(void** v)
+{
+  struct vector_info* new_v;
+
+  new_v = realloc(VSTART(*v), sizeof(struct vector_info) + VSTART(*v)->size * VSTART(*v)->element_size);
+  assert(new_v);
+
+  new_v->capacity = new_v->size;
+
+  *v = VDATA(new_v);
+}
