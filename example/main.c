@@ -6,10 +6,12 @@ int main()
 {
   vec(int) t = new_vec(int, 20);
 
-  int tSize = get_vec_size(t);
-  printf("size: %d\n", tSize);
+  int tSize;
+  int tCapacity;
 
-  int tCapacity = get_vec_capacity(t);
+  tSize = get_vec_size(t);
+  printf("size: %d\n", tSize);
+  tCapacity = get_vec_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
   if (is_vec_empty(t))
@@ -17,6 +19,8 @@ int main()
 
   reserve_vec(&t, 50);
 
+  tSize = get_vec_size(t);
+  printf("size: %d\n", tSize);
   tCapacity = get_vec_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
@@ -24,12 +28,20 @@ int main()
 
   tSize = get_vec_size(t);
   printf("size: %d\n", tSize);
+  tCapacity = get_vec_capacity(t);
+  printf("capacity: %d\n", tCapacity);
+
+  shrink_fit_vec(&t);
+
+  tSize = get_vec_size(t);
+  printf("size: %d\n", tSize);
+  tCapacity = get_vec_capacity(t);
+  printf("capacity: %d\n", tCapacity);
 
   resize_vec(&t, 100);
 
   tSize = get_vec_size(t);
   printf("size: %d\n", tSize);
-
   tCapacity = get_vec_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
