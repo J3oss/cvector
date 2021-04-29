@@ -29,7 +29,7 @@ void* new_vec_impl(unsigned int element_size, unsigned int capacity)
   v->capacity = init_capacity;
   v->element_size = element_size;
 
-  return VDATA(v);
+  return ++v;
 }
 
 void free_vec(void *v)
@@ -59,9 +59,12 @@ unsigned int is_vec_empty(void* v)
 
 void reserve_vec(void** v, unsigned int capacity)
 {
+  if (get_vec_capacity(*v) > capacity)
+    return;
+
   struct vector_info* new_v;
 
-  new_v = realloc(VSTART(*v), sizeof(struct vector_info) + capacity * new_v->element_size);
+  new_v = realloc(VSTART(*v), sizeof(struct vector_info) + capacity * VSTART(*v)->element_size);
   assert(new_v);
 
   new_v->capacity = capacity;
