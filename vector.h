@@ -16,3 +16,5 @@ unsigned int is_vec_empty(void* v);
 void reserve_vec(void** v, unsigned int capacity);
 
 void resize_vec(void** v, unsigned int size);
+
+void push_back_vec(void** v, void* element);

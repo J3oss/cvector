@@ -4,7 +4,10 @@
 #include <string.h>
 #include <assert.h>
 
+#include <stdio.h>
+
 #define INIT_CAPACITY 10
+#define GROWTH_RATE  3/2
 
 #define VSTART(V) (((struct vector_info*) V)-1)
 #define  VDATA(V) (((struct vector_info*) V)+1)
@@ -64,7 +67,7 @@ void reserve_vec(void** v, unsigned int capacity)
 
   struct vector_info* new_v;
 
-  new_v = realloc(VSTART(*v), sizeof(struct vector_info) + capacity * VSTART(*v)->element_size);
+  new_v = realloc(VSTART(*v), sizeof(struct vector_info) + (capacity * (VSTART(*v)->element_size)) );
   assert(new_v);
 
   new_v->capacity = capacity;
@@ -75,7 +78,7 @@ void reserve_vec(void** v, unsigned int capacity)
 void resize_vec(void** v, unsigned int size)
 {
   if (size > get_vec_capacity(*v))
-    reserve_vec(v, size);
+    reserve_vec(v, size * GROWTH_RATE);
 
   VSTART(*v)->size = size;
 }
@@ -90,4 +93,17 @@ void shrink_fit_vec(void** v)
   new_v->capacity = new_v->size;
 
   *v = VDATA(new_v);
+}
+
+void push_back_vec(void** v, void* element)
+{
+  unsigned int size = get_vec_size(*v);
+  unsigned int capacity = get_vec_capacity(*v);
+  unsigned int esize = get_vec_element_size(*v);
+
+  resize_vec(v, size + 1);
+
+  void* dest = (char*) (*v) + size * esize;
+
+  memcpy( dest, element, esize );
 }
