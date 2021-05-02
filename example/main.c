@@ -9,72 +9,72 @@ int main()
   int tSize;
   int tCapacity;
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  if (is_vec_empty(t))
+  if (vec_is_empty(t))
     printf("vector is empty\n");
 
   int n = 5;
-  push_back_vec(&t, &n);
+  vec_push_back(&t, &n);
   printf("%d\n", t[0]);
 
-  push_back_vec(&t, &n);
+  vec_push_back(&t, &n);
 
-  if (is_vec_empty(t))
+  if (vec_is_empty(t))
     printf("vector is empty\n");
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  push_back_vec(&t, &n);
+  vec_push_back(&t, &n);
   printf("%d\n", t[1]);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  if (is_vec_empty(t))
+  if (vec_is_empty(t))
     printf("vector is empty\n");
 
-  reserve_vec(&t, 50);
+  vec_reserve(&t, 50);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  resize_vec(&t, 2);
+  vec_resize(&t, 2);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  shrink_fit_vec(&t);
+  vec_shrink_fit(&t);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  resize_vec(&t, 100);
+  vec_resize(&t, 100);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  tSize = get_vec_size(t);
+  tSize = vec_get_size(t);
   printf("size: %d\n", tSize);
-  tCapacity = get_vec_capacity(t);
+  tCapacity = vec_get_capacity(t);
   printf("capacity: %d\n", tCapacity);
 
-  free_vec(t);
+  vec_free(t);
   return 0;
 }
