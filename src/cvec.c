@@ -23,7 +23,7 @@ typedef struct
 #define CAPACITY(pVec) METADATA_PTR(pVec)->capacity
 
 //returns pointer to meta data
-void* vec_alloc(void* pMetaData, const uint32_t dataSize)
+void* cvec_alloc(void* pMetaData, const uint32_t dataSize)
 {
   void* pVec = pMetaData ? pMetaData:NULL;
   const uint32_t total_size = sizeof(meta_data) + dataSize;  
@@ -32,11 +32,11 @@ void* vec_alloc(void* pMetaData, const uint32_t dataSize)
 }
 
 //returns pointer to data
-void* _impl_new_vec(const uint32_t type_size, const uint32_t capacity)
+void* _impl_new_cvec(const uint32_t type_size, const uint32_t capacity)
 {
   const uint32_t init_cap = capacity ? capacity:INIT_CAPACITY;
 
-  meta_data* v = vec_alloc(NULL, init_cap * type_size);  
+  meta_data* v = cvec_alloc(NULL, init_cap * type_size);
   v->size = 0;
   v->tsize = type_size;
   v->capacity = init_cap;
@@ -44,65 +44,65 @@ void* _impl_new_vec(const uint32_t type_size, const uint32_t capacity)
   return ++v;
 }
 
-void vec_free(void *pVec)
+void cvec_free(void *pVec)
 {
   free(METADATA_PTR(pVec));
 }
 
-uint32_t vec_size(const void* pVec)
+uint32_t cvec_size(const void* pVec)
 {
   return SIZE(pVec);
 }
 
-uint32_t vec_capacity(const void* pVec)
+uint32_t cvec_capacity(const void* pVec)
 {
   return CAPACITY(pVec);
 }
 
-uint32_t vec_element_size(const void* pVec)
+uint32_t cvec_element_size(const void* pVec)
 {
   return TSIZE(pVec);
 }
 
-bool vec_is_empty(const void* pVec)
+bool cvec_is_empty(const void* pVec)
 {
   return SIZE(pVec) ? false : true;
 }
 
-void vec_reserve(void** ppVec, const uint32_t new_capacity)
+void cvec_reserve(void** ppVec, const uint32_t new_capacity)
 {
   if (CAPACITY(*ppVec) > new_capacity)
     return;
 
-  meta_data* new_vec = vec_alloc(METADATA_PTR(*ppVec), new_capacity * TSIZE(*ppVec));
+  meta_data* new_vec = cvec_alloc(METADATA_PTR(*ppVec), new_capacity * TSIZE(*ppVec));
   new_vec->capacity = new_capacity;
   *ppVec = ++new_vec;
 }
 
-void vec_resize(void** ppVec, const uint32_t size)
+void cvec_resize(void** ppVec, const uint32_t size)
 {
   if (size > SIZE(*ppVec))
-    vec_reserve(ppVec, size);
+    cvec_reserve(ppVec, size);
 
   METADATA_PTR(*ppVec)->size = size;
 }
 
-void vec_shrink_fit(void** ppVec)
+void cvec_shrink_fit(void** ppVec)
 {
-  meta_data* new_v = vec_alloc(METADATA_PTR(*ppVec), SIZE(*ppVec) * CAPACITY(*ppVec));
+  meta_data* new_v = cvec_alloc(METADATA_PTR(*ppVec), SIZE(*ppVec) * CAPACITY(*ppVec));
   new_v->size = new_v->size;
   new_v->capacity = new_v->size;
 
   *ppVec = ++new_v;
 }
 
-void vec_push_back(void** ppVec, void* element)
+void cvec_push_back(void** ppVec, void* element)
 {
   const uint32_t size = SIZE(*ppVec);
   const uint32_t tsize = TSIZE(*ppVec);
 
   if (CAPACITY(*ppVec) < size + 1) {
-    vec_reserve(ppVec, size * GROWTH_RATE);
+    cvec_reserve(ppVec, size * GROWTH_RATE);
   }
 
   void* dest = (char*) (*ppVec) + size * tsize;
