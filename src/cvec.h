@@ -19,4 +19,5 @@ void cvec_resize(void** ppVec, const uint32_t size);
 
 void cvec_shrink_fit(void** ppVec);
 
-void cvec_push_back(void** v, void* element);
+// argument are void** v and T element
+void cvec_push_back(void** v, ...);

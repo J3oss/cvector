@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <stdarg.h>
 
 #define INIT_CAPACITY 10
 #define GROWTH_RATE  3/2
@@ -96,8 +97,13 @@ void cvec_shrink_fit(void** ppVec)
   *ppVec = ++new_v;
 }
 
-void cvec_push_back(void** ppVec, void* element)
+void cvec_push_back(void** ppVec, ...)
 {
+  va_list ptr;
+  va_start(ptr, ppVec);
+  size_t element = va_arg(ptr, size_t);
+  va_end(ptr);
+
   const uint32_t size = SIZE(*ppVec);
   const uint32_t tsize = TSIZE(*ppVec);
 
@@ -106,7 +112,7 @@ void cvec_push_back(void** ppVec, void* element)
   }
 
   void* dest = (char*) (*ppVec) + size * tsize;
-  memcpy(dest, element, tsize);
+  memcpy(dest, &element, tsize);
 
   METADATA_PTR(*ppVec)->size = size + 1;
 }

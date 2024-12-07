@@ -12,8 +12,8 @@ int main()
     printf("Initial size: %u\n", cvec_size(v));
     printf("Initial capacity: %u\n", cvec_capacity(v));
 
-    for (int i = 0; i < 10; ++i) {
-        cvec_push_back((void**)&v, &i);
+    for (uint32_t i = 0; i < 10; ++i) {
+        cvec_push_back((void**)&v, i);
     }
 
     printf("Size after pushing elements: %u\n", cvec_size(v));
@@ -32,7 +32,7 @@ int main()
     printf("Capacity after resizing: %u\n", cvec_capacity(v));
 
     for (int i = 10; i < 15; ++i) {
-        cvec_push_back((void**)&v, &i);
+        cvec_push_back((void**)&v, i);
     }
 
     printf("Size after pushing more elements: %u\n", cvec_size(v));
