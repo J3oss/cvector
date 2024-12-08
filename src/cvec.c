@@ -80,16 +80,20 @@ void cvec_reserve(void** ppVec, const uint32_t new_capacity)
   *ppVec = ++new_vec;
 }
 
-void cvec_resize(void** ppVec, const uint32_t size)
+void cvec_resize(void* pVec, const uint32_t size)
 {
+  void** ppVec = pVec;
+
   if (size > SIZE(*ppVec))
     cvec_reserve(ppVec, size);
 
   METADATA_PTR(*ppVec)->size = size;
 }
 
-void cvec_shrink_fit(void** ppVec)
+void cvec_shrink_fit(void* pVec)
 {
+  void** ppVec = pVec;
+
   meta_data* new_v = cvec_alloc(METADATA_PTR(*ppVec), SIZE(*ppVec) * CAPACITY(*ppVec));
   new_v->size = new_v->size;
   new_v->capacity = new_v->size;
@@ -97,11 +101,13 @@ void cvec_shrink_fit(void** ppVec)
   *ppVec = ++new_v;
 }
 
-void cvec_push_back(void** ppVec, ...)
+void cvec_push_back(void* pVec, ...)
 {
+  void** ppVec = pVec;
+
   va_list ptr;
-  va_start(ptr, ppVec);
-  size_t element = va_arg(ptr, size_t);
+  va_start(ptr, pVec);
+  int element = va_arg(ptr, int);
   va_end(ptr);
 
   const uint32_t size = SIZE(*ppVec);

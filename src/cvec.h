@@ -15,9 +15,11 @@ uint32_t cvec_element_size(const void* pVec);
 
 bool cvec_is_empty(const void* pVec);
 
-void cvec_resize(void** ppVec, const uint32_t size);
+//takes a reference of vector and new size
+void cvec_resize(void* pVec, const uint32_t size);
 
-void cvec_shrink_fit(void** ppVec);
+//takes a reference of vector
+void cvec_shrink_fit(void* pVec);
 
-// argument are void** v and T element
-void cvec_push_back(void** v, ...);
+//takes a reference of vector and T element
+void cvec_push_back(void* pVec, ...);

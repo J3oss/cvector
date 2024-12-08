@@ -13,7 +13,7 @@ int main()
     printf("Initial capacity: %u\n", cvec_capacity(v));
 
     for (uint32_t i = 0; i < 10; ++i) {
-        cvec_push_back((void**)&v, i);
+        cvec_push_back(&v, i);
     }
 
     printf("Size after pushing elements: %u\n", cvec_size(v));
@@ -25,14 +25,14 @@ int main()
         assert(v[i] == i);
     }
 
-    cvec_resize((void**)&v, 15);
+    cvec_resize(&v, 15);
 
     printf("Size after resizing: %u\n", cvec_size(v));
     assert(cvec_size(v) == 15);
     printf("Capacity after resizing: %u\n", cvec_capacity(v));
 
     for (int i = 10; i < 15; ++i) {
-        cvec_push_back((void**)&v, i);
+        cvec_push_back(&v, i);
     }
 
     printf("Size after pushing more elements: %u\n", cvec_size(v));
@@ -40,7 +40,7 @@ int main()
     printf("Capacity after pushing more elements: %u\n", cvec_capacity(v));
     assert(cvec_capacity(v) == 22); //15 * 3/2
 
-    cvec_shrink_fit((void**)&v);
+    cvec_shrink_fit(&v);
     printf("Size after shrink fit: %u\n", cvec_size(v));
     printf("Capacity after shrink fit: %u\n", cvec_capacity(v));
     assert(cvec_size(v) == cvec_capacity(v) &&  cvec_size(v) == 20);
