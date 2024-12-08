@@ -101,14 +101,9 @@ void cvec_shrink_fit(void* pVec)
   *ppVec = ++new_v;
 }
 
-void cvec_push_back(void* pVec, ...)
+void cvec_push_back(void* pVec, void* element)
 {
   void** ppVec = pVec;
-
-  va_list ptr;
-  va_start(ptr, pVec);
-  int element = va_arg(ptr, int);
-  va_end(ptr);
 
   const uint32_t size = SIZE(*ppVec);
   const uint32_t tsize = TSIZE(*ppVec);
@@ -118,7 +113,7 @@ void cvec_push_back(void* pVec, ...)
   }
 
   void* dest = (char*) (*ppVec) + size * tsize;
-  memcpy(dest, &element, tsize);
+  memcpy(dest, element, tsize);
 
   METADATA_PTR(*ppVec)->size = size + 1;
 }

@@ -22,4 +22,4 @@ void cvec_resize(void* pVec, const uint32_t size);
 void cvec_shrink_fit(void* pVec);
 
 //takes a reference of vector and T element
-void cvec_push_back(void* pVec, ...);
+void cvec_push_back(void* pVec, void* element);
