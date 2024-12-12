@@ -101,7 +101,8 @@ void cvec_shrink_fit(void* pVec)
   *ppVec = ++new_v;
 }
 
-void cvec_push_back(void* pVec, void* element)
+void __attribute__((ms_abi)) cvec_push_back(void* pVec, ...) __attribute__((alias("_impl_cvec_push_back")));
+void __attribute__((ms_abi)) _impl_cvec_push_back(void* pVec, uint64_t arg1)
 {
   void** ppVec = pVec;
 
@@ -113,7 +114,19 @@ void cvec_push_back(void* pVec, void* element)
   }
 
   void* dest = (char*) (*ppVec) + size * tsize;
-  memcpy(dest, element, tsize);
+  switch (tsize)
+  {
+    case 1:
+    case 2:
+    case 4:
+    case 8:
+      memcpy(dest, &arg1, tsize);
+      break;
+    default:
+      memcpy(dest, (void*)arg1, tsize);
+    break;
+  }
 
   METADATA_PTR(*ppVec)->size = size + 1;
 }
+

@@ -6,13 +6,35 @@
 
 typedef struct
 {
+    char a;
+    char b;
+    char c;
+} struct03_t;
+
+typedef struct
+{
     uint32_t a;
-    uint32_t b;
-    uint32_t c;
-} myStruct;
+    uint16_t b;
+    char c;
+} struct07_t;
+
+typedef struct
+{
+    uint64_t a;
+    uint16_t b;
+    char c;
+} struct11_t;
+
+typedef struct
+{
+    uint64_t a;
+    uint64_t b;
+    char c;
+} struct17_t;
 
 int main()
 {
+    //int vector test
     cvec(int) v = new_cvec(int, 0);
     assert(v != 0);
     
@@ -20,7 +42,7 @@ int main()
     printf("Initial capacity: %u\n", cvec_capacity(v));
 
     for (uint32_t i = 0; i < 10; ++i) {
-        cvec_push_back(&v, &i);
+        cvec_push_back(&v, i);
     }
 
     printf("Size after pushing elements: %u\n", cvec_size(v));
@@ -39,7 +61,7 @@ int main()
     printf("Capacity after resizing: %u\n", cvec_capacity(v));
 
     for (int i = 10; i < 15; ++i) {
-        cvec_push_back(&v, &i);
+        cvec_push_back(&v, i);
     }
 
     printf("Size after pushing more elements: %u\n", cvec_size(v));
@@ -61,31 +83,43 @@ int main()
 
     cvec_free(v);
 
-    //struct test
-    myStruct ms0 = { 0, 5, 10};
-    myStruct ms1 = { 1, 6, 11};
-    myStruct ms2 = { 2, 7, 12};
-    myStruct ms3 = { 3, 8, 13};
-    myStruct ms4 = { 4, 9, 14};
+    //user defined test
+    struct03_t s03_0 = {33,3,0}; struct07_t s07_0 = {777,77,7}; struct11_t s11_0 = {111111,1111,11}; struct17_t s17_0 = {171717,1717,17};
+    struct03_t s03_1 = {34,4,1}; struct07_t s07_1 = {778,78,8}; struct11_t s11_1 = {111112,1112,12}; struct17_t s17_1 = {171718,1718,18};
+    struct03_t s03_2 = {35,5,2}; struct07_t s07_2 = {779,79,9}; struct11_t s11_2 = {111113,1113,13}; struct17_t s17_2 = {171719,1719,19};
 
-    cvec(myStruct) vStruct = new_cvec(myStruct, 0);
-    assert(vStruct != 0);
+    cvec(struct03_t) vS03 = new_cvec(struct03_t, 0);
+    cvec(struct07_t) vS07 = new_cvec(struct07_t, 0);
+    cvec(struct11_t) vS11 = new_cvec(struct11_t, 0);
+    cvec(struct17_t) vS17 = new_cvec(struct17_t, 0);
 
-    printf("Initial size: %u\n", cvec_size(vStruct));
-    printf("Initial capacity: %u\n", cvec_capacity(vStruct));
+    cvec_push_back(&vS03, s03_0);
+    cvec_push_back(&vS03, s03_1);
+    cvec_push_back(&vS03, s03_2);
 
-    cvec_push_back(&vStruct, &ms0);
-    cvec_push_back(&vStruct, &ms1);
-    cvec_push_back(&vStruct, &ms2);
-    cvec_push_back(&vStruct, &ms3);
-    cvec_push_back(&vStruct, &ms4);
+    cvec_push_back(&vS07, s07_0);
+    cvec_push_back(&vS07, s07_1);
+    cvec_push_back(&vS07, s07_2);
 
-    printf("Size after pushing elements: %u\n", cvec_size(vStruct));
-    assert(cvec_size(vStruct) == 5);
-    printf("Capacity after pushing elements: %u\n", cvec_capacity(vStruct));
+    cvec_push_back(&vS11, s11_0);
+    cvec_push_back(&vS11, s11_1);
+    cvec_push_back(&vS11, s11_2);
 
-    for (uint32_t i = 0; i < cvec_size(vStruct); ++i) {
-        printf("Element at index %d: { %d, %d, %d }\n", i, vStruct[i].a, vStruct[i].b, vStruct[i].c);
-        assert(vStruct[i].a == i && vStruct[i].b == i+5 && vStruct[i].c == i+10);
+    cvec_push_back(&vS17, s17_0);
+    cvec_push_back(&vS17, s17_1);
+    cvec_push_back(&vS17, s17_2);
+
+    for (uint32_t i = 0; i < cvec_size(vS03); ++i) {
+        printf("vS03 Element at index %d: { %d, %d, %d }\n", i, vS03[i].a, vS03[i].b, vS03[i].c);
+        assert(vS03[i].a == i+33 && vS03[i].b == i+3 && vS03[i].c == i+0);
+
+        printf("vS07 Element at index %d: { %d, %d, %d }\n", i, vS07[i].a, vS07[i].b, vS07[i].c);
+        assert(vS07[i].a == i+777 && vS07[i].b == i+77 && vS07[i].c == i+7);
+
+        printf("vS11 Element at index %d: { %lld, %d, %d }\n", i, vS11[i].a, vS11[i].b, vS11[i].c);
+        assert(vS11[i].a == i+111111 && vS11[i].b == i+1111 && vS11[i].c == i+11);
+
+        printf("vS17 Element at index %d: { %lld, %lld, %d }\n", i, vS17[i].a, vS17[i].b, vS17[i].c);
+        assert(vS17[i].a == i+171717 && vS17[i].b == i+1717 && vS17[i].c == i+17);
     }
 }

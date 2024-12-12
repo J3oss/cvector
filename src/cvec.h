@@ -22,4 +22,11 @@ void cvec_resize(void* pVec, const uint32_t size);
 void cvec_shrink_fit(void* pVec);
 
 //takes a reference of vector and T element
-void cvec_push_back(void* pVec, void* element);
+#ifndef _WIN32
+void __attribute__((ms_abi)) cvec_push_back(void* pVec, ...);
+#endif
+
+#ifdef _WIN32
+#pragma comment(linker, "/alternatename:cvec_push_back=_impl_cvec_push_back")
+void cvec_push_back(void* pVec, ...);
+#endif
