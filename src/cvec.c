@@ -101,8 +101,14 @@ void cvec_shrink_fit(void* pVec)
   *ppVec = ++new_v;
 }
 
+#ifndef _WIN32
 void __attribute__((ms_abi)) cvec_push_back(void* pVec, ...) __attribute__((alias("_impl_cvec_push_back")));
 void __attribute__((ms_abi)) _impl_cvec_push_back(void* pVec, uint64_t arg1)
+#endif
+#ifdef _WIN32
+void cvec_push_back(void* pVec, ...);
+void _impl_cvec_push_back(void* pVec, uint64_t arg1)
+#endif
 {
   void** ppVec = pVec;
 

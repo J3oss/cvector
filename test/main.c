@@ -110,16 +110,16 @@ int main()
     cvec_push_back(&vS17, s17_2);
 
     for (uint32_t i = 0; i < cvec_size(vS03); ++i) {
-        printf("vS03 Element at index %d: { %d, %d, %d }\n", i, vS03[i].a, vS03[i].b, vS03[i].c);
+        printf("vS03 Element at index %d: { %u, %u, %u }\n", i, vS03[i].a, vS03[i].b, vS03[i].c);
         assert(vS03[i].a == i+33 && vS03[i].b == i+3 && vS03[i].c == i+0);
 
-        printf("vS07 Element at index %d: { %d, %d, %d }\n", i, vS07[i].a, vS07[i].b, vS07[i].c);
+        printf("vS07 Element at index %d: { %u, %u, %u }\n", i, vS07[i].a, vS07[i].b, vS07[i].c);
         assert(vS07[i].a == i+777 && vS07[i].b == i+77 && vS07[i].c == i+7);
 
-        printf("vS11 Element at index %d: { %lld, %d, %d }\n", i, vS11[i].a, vS11[i].b, vS11[i].c);
+        printf("vS11 Element at index %d: { %llu, %u, %u }\n", i, vS11[i].a, vS11[i].b, vS11[i].c);
         assert(vS11[i].a == i+111111 && vS11[i].b == i+1111 && vS11[i].c == i+11);
 
-        printf("vS17 Element at index %d: { %lld, %lld, %d }\n", i, vS17[i].a, vS17[i].b, vS17[i].c);
+        printf("vS17 Element at index %d: { %llu, %llu, %u }\n", i, vS17[i].a, vS17[i].b, vS17[i].c);
         assert(vS17[i].a == i+171717 && vS17[i].b == i+1717 && vS17[i].c == i+17);
     }
 }
