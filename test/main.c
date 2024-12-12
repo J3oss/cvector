@@ -122,4 +122,9 @@ int main()
         printf("vS17 Element at index %d: { %llu, %llu, %u }\n", i, vS17[i].a, vS17[i].b, vS17[i].c);
         assert(vS17[i].a == i+171717 && vS17[i].b == i+1717 && vS17[i].c == i+17);
     }
+
+    cvec_free(vS03);
+    cvec_free(vS07);
+    cvec_free(vS11);
+    cvec_free(vS17);
 }
