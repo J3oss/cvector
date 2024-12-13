@@ -44,27 +44,32 @@ void* _impl_new_cvec(const size_t type_size, const size_t capacity)
 
 void cvec_free(void *pVec)
 {
-  free(METADATA_PTR(pVec));
+  void* const * ppVec = pVec;
+  free(METADATA_PTR(*ppVec));
 }
 
 size_t cvec_size(const void* pVec)
 {
-  return SIZE(pVec);
+  void* const * ppVec = pVec;
+  return SIZE(*ppVec);
 }
 
 size_t cvec_capacity(const void* pVec)
 {
-  return CAPACITY(pVec);
+  void* const * ppVec = pVec;
+  return CAPACITY(*ppVec);
 }
 
 size_t cvec_element_size(const void* pVec)
 {
-  return TSIZE(pVec);
+  void* const * ppVec = pVec;
+  return TSIZE(*ppVec);
 }
 
 bool cvec_is_empty(const void* pVec)
 {
-  return SIZE(pVec) ? false : true;
+  void* const * ppVec = pVec;
+  return SIZE(*ppVec) ? false : true;
 }
 
 void cvec_reserve(void** ppVec, const size_t new_capacity)

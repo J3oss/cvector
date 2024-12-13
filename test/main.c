@@ -38,50 +38,50 @@ int main()
     cvec(int) v = new_cvec(int, 0);
     assert(v != 0);
     
-    printf("Initial size: %llu\n", cvec_size(v));
-    printf("Initial capacity: %llu\n", cvec_capacity(v));
+    printf("Initial size: %llu\n", cvec_size(&v));
+    printf("Initial capacity: %llu\n", cvec_capacity(&v));
 
     for (uint32_t i = 0; i < 10; ++i) {
         cvec_push(&v, i);
     }
 
-    printf("Size after pushing elements: %llu\n", cvec_size(v));
-    assert(cvec_size(v) == 10);
-    printf("Capacity after pushing elements: %llu\n", cvec_capacity(v));
+    printf("Size after pushing elements: %llu\n", cvec_size(&v));
+    assert(cvec_size(&v) == 10);
+    printf("Capacity after pushing elements: %llu\n", cvec_capacity(&v));
 
-    for (uint32_t i = 0; i < cvec_size(v); ++i) {
+    for (uint32_t i = 0; i < cvec_size(&v); ++i) {
         printf("Element at index %d: %d\n", i, v[i]);
         assert(v[i] == i);
     }
 
     cvec_resize(&v, 15);
 
-    printf("Size after resizing: %llu\n", cvec_size(v));
-    assert(cvec_size(v) == 15);
-    printf("Capacity after resizing: %llu\n", cvec_capacity(v));
+    printf("Size after resizing: %llu\n", cvec_size(&v));
+    assert(cvec_size(&v) == 15);
+    printf("Capacity after resizing: %llu\n", cvec_capacity(&v));
 
     for (int i = 10; i < 15; ++i) {
         cvec_push(&v, i);
     }
 
-    printf("Size after pushing more elements: %llu\n", cvec_size(v));
-    assert(cvec_size(v) == 20);
-    printf("Capacity after pushing more elements: %llu\n", cvec_capacity(v));
-    assert(cvec_capacity(v) == 22); //15 * 3/2
+    printf("Size after pushing more elements: %llu\n", cvec_size(&v));
+    assert(cvec_size(&v) == 20);
+    printf("Capacity after pushing more elements: %llu\n", cvec_capacity(&v));
+    assert(cvec_capacity(&v) == 22); //15 * 3/2
 
     cvec_shrink_fit(&v);
-    printf("Size after shrink fit: %llu\n", cvec_size(v));
-    printf("Capacity after shrink fit: %llu\n", cvec_capacity(v));
-    assert(cvec_size(v) == cvec_capacity(v) &&  cvec_size(v) == 20);
+    printf("Size after shrink fit: %llu\n", cvec_size(&v));
+    printf("Capacity after shrink fit: %llu\n", cvec_capacity(&v));
+    assert(cvec_size(&v) == cvec_capacity(&v) &&  cvec_size(&v) == 20);
 
-    if (cvec_is_empty(v)) {
+    if (cvec_is_empty(&v)) {
         printf("The vector is empty.\n");
     } else {
         printf("The vector is not empty.\n");
     }
-    assert(!cvec_is_empty(v));
+    assert(!cvec_is_empty(&v));
 
-    cvec_free(v);
+    cvec_free(&v);
 
     //user defined test
     struct03_t s03_0 = {33,3,0}; struct07_t s07_0 = {777,77,7}; struct11_t s11_0 = {111111,1111,11}; struct17_t s17_0 = {171717,1717,17};
@@ -109,7 +109,7 @@ int main()
     cvec_push(&vS17, s17_1);
     cvec_push(&vS17, s17_2);
 
-    for (uint32_t i = 0; i < cvec_size(vS03); ++i) {
+    for (uint32_t i = 0; i < cvec_size(&vS03); ++i) {
         printf("vS03 Element at index %d: { %u, %u, %u }\n", i, vS03[i].a, vS03[i].b, vS03[i].c);
         assert(vS03[i].a == i+33 && vS03[i].b == i+3 && vS03[i].c == i+0);
 
