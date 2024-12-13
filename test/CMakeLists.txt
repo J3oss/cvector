@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project(test_cvec VERSION 0.0.1 LANGUAGES C)
 
 # Define the executable
-add_executable(test_cvec main.c ../src/cvec.c)
+add_executable(test_cvec main.c ../cvec.c)
+target_include_directories(test_cvec PRIVATE ..)
 
 # Set build type to Debug if not specified
 if(NOT CMAKE_BUILD_TYPE)

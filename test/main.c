@@ -1,4 +1,4 @@
-#include "../src/cvec.h"
+#include "cvec.h"
 
 #include <stdio.h>
 #include <stdint.h>
