@@ -24,10 +24,10 @@ void cvec_shrink_fit(void* pVec);
 
 #ifndef _WIN32
 //takes a reference of vector and T element
-void __attribute__((ms_abi)) cvec_push(void* pVec, ...);
+size_t __attribute__((ms_abi)) cvec_push(void* pVec, ...);
 #endif
 #ifdef _WIN32
 #pragma comment(linker, "/alternatename:cvec_push=_impl_cvec_push")
 //takes a reference of vector and T element
-void cvec_push(void* pVec, ...);
+size_t cvec_push(void* pVec, ...);
 #endif

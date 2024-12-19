@@ -104,12 +104,12 @@ void cvec_shrink_fit(void* pVec)
 }
 
 #ifndef _WIN32
-void __attribute__((ms_abi)) cvec_push(void* pVec, ...) __attribute__((alias("_impl_cvec_push")));
-void __attribute__((ms_abi)) _impl_cvec_push(void* pVec, size_t arg1)
+size_t __attribute__((ms_abi)) cvec_push(void* pVec, ...) __attribute__((alias("_impl_cvec_push")));
+size_t __attribute__((ms_abi)) _impl_cvec_push(void* pVec, size_t arg1)
 #endif
 #ifdef _WIN32
-void cvec_push(void* pVec, ...);
-void _impl_cvec_push(void* pVec, size_t arg1)
+size_t cvec_push(void* pVec, ...);
+size_t _impl_cvec_push(void* pVec, size_t arg1)
 #endif
 {
   void** ppVec = pVec;
@@ -136,5 +136,7 @@ void _impl_cvec_push(void* pVec, size_t arg1)
   }
 
   METADATA_PTR(*ppVec)->size = size + 1;
+
+  return size;
 }
 
