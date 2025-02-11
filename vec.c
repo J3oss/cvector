@@ -8,6 +8,11 @@
 #define INIT_CAPACITY 10
 #define GROWTH_RATE 3 / 2
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#define __builtin_popcount __popcnt
+#endif
+
 typedef struct
 {
 	size_t size;
@@ -15,8 +20,8 @@ typedef struct
 	size_t capacity;
 } meta_data_t;
 
-#define DATA_PTR(X) (((meta_data_t *)X) + 1)
-#define METADATA_PTR(X) (((meta_data_t *)X) - 1)
+#define DATA_PTR(X) ((((meta_data_t *)(X))) + 1)
+#define METADATA_PTR(X) (((meta_data_t *)(X)) - 1)
 
 #define SIZE(X) METADATA_PTR((*(X)))->size
 #define TSIZE(X) METADATA_PTR((*(X)))->tsize
@@ -125,7 +130,7 @@ size_t CALLCONVENTION vec_push(void *p_vec, ...)
 		vec_reserve(pp_vec, size * GROWTH_RATE);
 	}
 
-	void *dest = (char *)(*pp_vec) + size * tsize;
+	char *dest = (char *)(*pp_vec) + size * tsize;
 
 	size_t value = VA_ARG(args, size_t);
 	void *ptr_value = GET_PTR(value, tsize);
@@ -148,7 +153,7 @@ size_t vec_push_ptr(void *p_vec, void *value)
 		vec_reserve(pp_vec, size * GROWTH_RATE);
 	}
 
-	void *dest = (char *)(*pp_vec) + size * tsize;
+	char *dest = (char *)*pp_vec + size * tsize;
 	memcpy(dest, value, tsize);
 
 	METADATA_PTR(*pp_vec)->size = size + 1;
@@ -166,8 +171,8 @@ void vec_remove(void *p_vec, size_t index)
 	assert(size);
 	METADATA_PTR(*pp_vec)->size = --size;
 
-	void *dest = (char *)(*pp_vec) + index * tsize;
-	void *src = (char *)(*pp_vec) + size * tsize;
+	char *dest = (char *)*pp_vec + index * tsize;
+	char *src = (char *)*pp_vec + size * tsize;
 	memcpy(dest, src, tsize);
 }
 
@@ -181,7 +186,7 @@ void vec_remove_ordered(void *p_vec, size_t index)
 	assert(size);
 	METADATA_PTR(*pp_vec)->size = --size;
 
-	void *dest = (char *)(*pp_vec) + index * tsize;
-	void *src = dest + tsize;
+	char *dest = (char *)*pp_vec + index * tsize;
+	char *src = dest + tsize;
 	memcpy(dest, src, (size - index) * tsize);
 }
