@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(cvec VERSION 0.0.1 LANGUAGES C)
+project(vec VERSION 0.0.1 LANGUAGES C)
 
-option(CVEC_BUILD_TEST "Build Test" ON)
-option(CVEC_LIB "Build Lib" OFF)
+option(VEC_BUILD_TEST "Build Test" ON)
+option(VEC_LIB "Build Lib" OFF)
 
-if(CVEC_BUILD_TEST)
+if(VEC_BUILD_TEST)
     add_subdirectory(test)
 endif()
 
-if(CVEC_LIB)
-    add_library(cvec cvec.c)
-    target_include_directories(cvec PRIVATE include)
+if(VEC_LIB)
+    add_library(vec vec.c)
+    target_include_directories(vec PRIVATE include)
 endif()

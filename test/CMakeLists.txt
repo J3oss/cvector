@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(test_cvec VERSION 0.0.1 LANGUAGES C)
+project(test_vec VERSION 0.0.1 LANGUAGES C)
 
 # Define the executable
-add_executable(test_cvec main.c ../cvec.c)
-target_include_directories(test_cvec PRIVATE ..)
+add_executable(test_vec main.c ../vec.c)
+target_include_directories(test_vec PRIVATE ..)
 
 # Set build type to Debug if not specified
 if(NOT CMAKE_BUILD_TYPE)
@@ -16,7 +16,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     if(CMAKE_C_COMPILER_ID MATCHES "Clang")
         if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
             message(STATUS "Using Clang on Windows")
-            target_link_libraries(test_cvec PRIVATE clang_rt.asan-x86_64)
+            target_link_libraries(test_vec PRIVATE clang_rt.asan-x86_64)
         elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
             message(STATUS "Using Clang on Linux")
             set(SANITIZER_FLAGS "-fsanitize=address,undefined -fno-omit-frame-pointer")
@@ -33,4 +33,4 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 enable_testing()
-add_test(test_cvec test_cvec)
+add_test(test_vec test_vec)
